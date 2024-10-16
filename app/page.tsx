@@ -1,4 +1,5 @@
 "use client";
+import Link from "next/link";
 import { FormEvent, useState } from "react";
 
 export default function Home() {
@@ -11,14 +12,12 @@ export default function Home() {
 		const clone: { Name: string; Text: string }[] = Array.from(chat);
 		clone.push({ Name: "User", Text: text });
 
-		console.log(text);
 		const response = await fetch(`/api/gemini?userInput=${text}`, {
 			method: "GET",
 			cache: "no-cache",
 		});
 
 		const json = await response.json();
-		console.log(json);
 		clone.push({ Name: "Bot", Text: json });
 
 		setChat(clone);
@@ -52,6 +51,7 @@ export default function Home() {
 				/>
 				<input type="submit" value="Submit" />
 			</form>
+			<Link href="/adminPage">Admin</Link>
 		</div>
 	);
 }

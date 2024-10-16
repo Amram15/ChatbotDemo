@@ -69,8 +69,14 @@ export async function GET(request: NextRequest) {
 	const data = await run();
 
 	console.log(data);
-	let num = Number(data);
-	num = num >= 0 ? num : NaN;
+	let num: number | null = Number(data);
+
+	if (num < 0) {
+		num = null;
+	} else if (num > reference.length) {
+		num = null;
+	}
+
 	const response = num ? reference[num - 1] : ErrorText;
 	return NextResponse.json(response);
 }
